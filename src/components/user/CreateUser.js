@@ -29,25 +29,37 @@ class CreateUser extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        var validate = {
+            title: this.state.title,
+            author: this.state.author
+        }
+
         var data = {
             title: this.state.title,
             author: this.state.author
         }
 
-        return fetch('http://localhost:3004/posts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }, 
-            body: JSON.stringify(data)
-        }).then(response => {
-            if (response.status == 201) {
-                console.log('succes input data');
-                  
-            }
-        }).catch(function(err) {
-            console.log(err);
-        })
+        if (validate.title == '') {
+            console.log('title null');
+        }else if(validate.author == '') {
+            console.log('author null');
+        }else {
+            return fetch('http://localhost:3004/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }, 
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.status == 201) {
+                    console.log('succes input data');
+                    this.props.history.push('/listUser');
+                      
+                }
+            }).catch(function(err) {
+                console.log(err);
+            })
+        } 
         
     }
 
@@ -64,17 +76,17 @@ class CreateUser extends Component {
                 <div className="row">
                     <h3>Create User</h3>
                     <div className="col-md-4">
-                        <form onSubmit={this.handleUpdate} method="POST">
+                        <form onSubmit={this.handleSubmit}>
                             
                             <div className="form-group text-left">
                                 <label>Title: </label>
-                                <input type="text" className="form-control" name="title" value={this.state.newItems.title} onChange={this.handleChange} />
+                                <input type="text" className="form-control" name="title" onChange={this.handleChange} />
                             </div>
 
 
                             <div className="form-group text-left">
                                 <label>Author: </label>
-                                <input type="text" className="form-control" name="author" value={this.state.newItems.author} onChange={this.handleChange} />
+                                <input type="text" className="form-control" name="author" onChange={this.handleChange} />
                             </div>
                             
                             <div className="form-group text-left">

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Route,
   NavLink,
-  HashRouter
+  HashRouter,
+  Link 
 } from "react-router-dom";
 import '../../assets/css/bootstrap.css';
 
@@ -55,11 +56,20 @@ class ListUser extends Component {
             .then((items) => this.setState({ items }))
     }
 
+    handleEdit(id) {
+        return fetch('http://localhost:3004/posts/'+ id, {
+            method: 'GET'
+        }).then(function(response) {
+            console.log(response);
+        })
+    }
+
     componentDidMount() {
         this.fetchData('http://localhost:3004/posts');
     }
 
     render() {
+
         return (
             <div className="container">
                 <div className="row">
@@ -81,7 +91,7 @@ class ListUser extends Component {
                                         <td>{item.author}</td>
                                         <td>
                                             <a className="btn btn-danger" onClick={() => this.deleteData(item.id)}>Delete</a> &nbsp;
-                                            <a className="btn btn-warning" onClick={() => this.handleEdit(item.id)}>Edit</a>
+                                            <Link to={"/edituser/" + item.id} className="btn btn-warning">Edit</Link>
                                         </td>
                                     </tr>
                                 ))}
