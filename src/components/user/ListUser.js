@@ -10,7 +10,7 @@ import '../../assets/css/bootstrap.css';
 
 class ListUser extends Component {
 
-	 constructor(props) {
+	constructor(props) {
         super(props);
 
         this.state = {value: ''};

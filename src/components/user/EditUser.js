@@ -10,36 +10,32 @@ import '../../assets/css/bootstrap.css';
 
 class EditUser extends Component {
 
-	constructor(props) {
+	constructor() {
+        super();
 
-        super(props);
+        this.state = {
+            list: [],
+            isLoading: false,
+        };
 
-        console.log(this.state)
-    }
-
-
-	fetchData() {
-
-		let param = this.props.match.params.id;
-
-       	return fetch('http://localhost:3004/posts/'+ param, {
-            method: 'PUT'
-        }).then(function(response){
-
-        	console.log(response);
-            
-        }).catch(function(err) {
-            console.log(err);
-        })
-        
+        console.log(this.state.list);  
     }
 
     componentDidMount() {
-        this.fetchData();
-    }
+
+        let param = this.props.match.params.id;
+
+        fetch('http://localhost:3004/posts/'+param)
+            .then( (response) => {
+                return response.json() })   
+                    .then( (json) => {
+                        console.log(json);
+                        this.setState({list: json});
+                    });
+    };
 
 
-	 render() {
+	render() {
 
         return (
             <div className="container">
